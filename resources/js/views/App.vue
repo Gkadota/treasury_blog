@@ -1,17 +1,15 @@
 <template>
     <div>
-        <h1>Vue Router Demo App</h1>
-        <p>
-            <router-link :to="{ name: 'home' }">Home</router-link> |
-            <router-link :to="{ name: 'register' }">Register</router-link>
-        </p>
-        <div class="container">
+        <NavBar v-if="!['login', 'register'].includes($route.name)"></NavBar>
             <router-view></router-view>
-        </div>
     </div>
 </template>
 <script>
+import NavBar from '../components/Navbar'
     export default {
-        name: 'App'
+        name: 'App',
+        components: {
+            NavBar,
+        }
     }
 </script>
