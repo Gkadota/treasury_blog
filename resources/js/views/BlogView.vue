@@ -1,5 +1,6 @@
 <template>
   <div class="container mt-6 mb-6">
+
     <h1 class="title">Blog Title Here</h1>
 
     <p class="sub-title">Posted on: August 13, 2021</p>
