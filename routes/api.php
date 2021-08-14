@@ -17,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::prefix('user')->group(function () {
+    Route::post('/', 'App\Http\Controllers\api\UsersController@registerUser');
+    Route::post('/login', 'App\Http\Controllers\api\UsersController@loginUser');
+});
+
+Route::prefix('admin/bloggers')->group(function () {
+    Route::get('/', 'App\Http\Controllers\api\AdminController@getBloggers');
+    Route::delete('/', 'App\Http\Controllers\api\AdminController@deleteBloggers');
+});

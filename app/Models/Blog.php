@@ -4,22 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
-{
 
+class Blog extends Model
+{
       /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 't_users';
+    protected $table = 't_blogs';
 
      /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'blog_id';
 
     /**
      * The attributes that are mass assignable.
@@ -27,21 +27,11 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'email',
-        'first_name',
-        'last_name',
-        'password',
-        'user_type',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'user_type',
+        'title',
+        'details',
+        'img',
+        'category',
+        'user_id',
     ];
 
 
@@ -51,5 +41,14 @@ class User extends Model
      * @var bool
      */
     public $timestamps = false;
+
+
+     /**
+     * Get the comments for the blog post.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'comment_id');
+    }
 
 }
