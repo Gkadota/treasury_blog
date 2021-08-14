@@ -19,6 +19,7 @@ class Comment extends Model
      */
     protected $primaryKey = 'comment_id';
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +29,15 @@ class Comment extends Model
         'comments',
         'category',
         'user_id',
+        'blog_id',
+    ];
+
+/**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
         'blog_id',
     ];
 
@@ -45,7 +55,7 @@ class Comment extends Model
      */
     public function blog()
     {
-        return $this->hasOne(Blog::class, 'blog_id');
+        return $this->belongsTo(Blog::class, 'blog_id');
     }
 
 
@@ -55,7 +65,7 @@ class Comment extends Model
      */
     public function user()
     {
-        return $this->hasOne(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 

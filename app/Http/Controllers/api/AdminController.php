@@ -22,6 +22,7 @@ class AdminController extends Controller
     }
 
 
+
     public function deleteBloggers(Request $request)
     {
         return $this->userService->deleteBlogger($request->input('user_id'));

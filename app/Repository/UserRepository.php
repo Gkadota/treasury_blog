@@ -18,6 +18,17 @@ class UserRepository extends BaseRepository
         return $newUser;
     }
 
+    /**
+     * Update new user
+     */
+    public function updatetUser(array $userInfo)
+    {
+        $updateUserInfo = User::where('user_id', $userInfo['user_id'])
+        ->update($userInfo);
+
+        return $updateUserInfo;
+    }
+
 
     /**
      * get specific user

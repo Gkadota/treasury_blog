@@ -21,13 +21,25 @@ class UserService extends BaseService
 
     public function createUser($userInfo)
     {
-        $aValidation = $this->validateRequest($userInfo, $this->userRules->insertUserRules());
-        if ($aValidation['success'] === false) {
+        $validation = $this->validateRequest($userInfo, $this->userRules->insertUserRules());
+        if ($validation['success'] === false) {
 
-            return $this->formatResponse(false, $aValidation['data']);
+            return $this->formatResponse(false, $validation['data']);
         }
 
-        return   $this->formatResponse(true, $this->userRepo->insertUser($userInfo)->toArray());
+        $insertResult  =    $this->formatResponse(true, $this->userRepo->insertUser($userInfo)->toArray());
+        return $insertResult;
+    }
+
+    public function updateUser($userInfo)
+    {
+        $validation = $this->validateRequest($userInfo, $this->userRules->updateUserRules($userInfo['user_id']));
+        if ($validation['success'] === false) {
+            return $this->formatResponse(false, $validation['data']);
+        }
+
+        $updateResult =   $this->formatResponse((bool) $this->userRepo->updatetUser($userInfo));
+        return $updateResult;
     }
 
 
@@ -36,14 +48,14 @@ class UserService extends BaseService
      */
     public function findUser($email,  $password)
     {
-        $aValidation = $this->validateRequest([
+        $validation = $this->validateRequest([
             'email'    => $email,
             'password' => $password
         ], $this->userRules->loginRules());
 
-        if ($aValidation['success'] === false) {
+        if ($validation['success'] === false) {
 
-            return $this->formatResponse(false, $aValidation['data']);
+            return $this->formatResponse(false, $validation['data']);
         }
 
         $foundUser =  $this->userRepo->findUser($email, $password);
@@ -73,15 +85,15 @@ class UserService extends BaseService
     public function deleteBlogger($userId)
     {
 
-        $aValidation = $this->validateRequest(
+        $validation = $this->validateRequest(
             [
                 'user_id' => $userId
             ],
             $this->userRules->deleteUserRules()
         );
 
-        if ($aValidation['success'] === false) {
-            return $this->formatResponse(false, $aValidation['data']);
+        if ($validation['success'] === false) {
+            return $this->formatResponse(false, $validation['data']);
         }
 
 

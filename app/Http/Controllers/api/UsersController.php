@@ -22,6 +22,12 @@ class UsersController extends Controller
         return $this->userService->createUser($request->all());
     }
 
+
+    public function updateBlogger(Request $request)
+    {
+        return $this->userService->updateUser($request->all());
+    }
+
     public function loginUser(Request $request)
     {
         return $this->userService->findUser($request->input('email'), $request->input('password'));

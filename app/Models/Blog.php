@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Comment;
 
 class Blog extends Model
 {
@@ -48,7 +48,16 @@ class Blog extends Model
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'comment_id');
+        return $this->hasMany(Comment::class, 'blog_id', 'blog_id');
+    }
+
+
+    /**
+     * Get the blogger info
+     */
+    public function blogger()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }
