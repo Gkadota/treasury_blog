@@ -14,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+
 Route::get('/{any}', 'App\Http\Controllers\AdminController@showIndexPage')->where('any', '.*');
+

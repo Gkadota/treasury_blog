@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
 
+
+
     public function showIndexPage() {
         return view('index');
     }
+
+
 }

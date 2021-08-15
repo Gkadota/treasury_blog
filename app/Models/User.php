@@ -41,7 +41,6 @@ class User extends Model
      */
     protected $hidden = [
         'password',
-        'user_type',
     ];
 
 

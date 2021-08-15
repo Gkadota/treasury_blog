@@ -4,14 +4,15 @@ namespace App\Rules;
 
 use Illuminate\Validation\Rule;
 use App\Models\User;
+
 class UserRules extends BaseRules
 {
     public function insertUserRules()
     {
         return [
-            'first_name'  => ['required', 'string' ,'max:30'],
-            'last_name'   => ['required', 'string' ,'max:30'],
-            'email'       => ['required','email','string', 'unique:t_users'],
+            'first_name'  => ['required', 'string', 'max:30'],
+            'last_name'   => ['required', 'string', 'max:30'],
+            'email'       => ['required', 'email', 'string', 'unique:t_users'],
             'password'    => ['required', 'string', 'min:8'],
             'user_type'   => ['required', 'string', Rule::in(['admin', 'blogger']),]
         ];
@@ -23,8 +24,8 @@ class UserRules extends BaseRules
             'user_id'     => ['required', 'string',  'max:30', 'exists:t_users'],
             'first_name'  => ['sometimes', 'string',  'max:30'],
             'last_name'   => ['sometimes', 'string',  'max:30'],
-            'email'       => ['sometimes','email' ,'string', Rule::unique('t_users')->ignore($userId, 'user_id')],
-            'password'    => ['sometimes', 'string', 'min:3'],
+            'email'       => ['sometimes', 'email', 'string', Rule::unique('t_users')->ignore($userId, 'user_id')],
+            'password'    => ['sometimes', 'string', 'min:8'],
         ];
     }
 
@@ -34,6 +35,13 @@ class UserRules extends BaseRules
         return [
             'email'      => ['required', 'string', 'exists:t_users'],
             'password'   => ['required', 'string'],
+        ];
+    }
+
+    public function logoutRules()
+    {
+        return [
+            'email'      => ['required', 'string', 'exists:t_users'],
         ];
     }
 

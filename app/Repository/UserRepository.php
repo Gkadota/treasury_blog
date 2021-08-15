@@ -31,11 +31,11 @@ class UserRepository extends BaseRepository
 
 
     /**
-     * get specific user
+     * get specific user using pass and email
      */
-    public function findUser(string $email, string $password)
+    public function findUser(string $email, string $password = null)
     {
-        $user = User::firstWhere(['email' => $email, 'password' => $password]);
+        $user = User::firstWhere(array_filter(['email' => $email, 'password' => $password]));
         return $user;
     }
 

@@ -64,14 +64,44 @@ class UserService extends BaseService
             return $this->formatResponse(false, ['message' => 'Incorrect username/password']);
         }
 
-        return $this->formatResponse(true, $foundUser->toArray());
+        $foundUser = $foundUser->toArray();
+
+        session()->put('granted_user', $foundUser);
+
+        return $this->formatResponse(true, $foundUser);
+    }
+
+    /**
+     *  Check credentials then logout
+     */
+    public function logoutUser($email)
+    {
+        $validation = $this->validateRequest(['email'    => $email], $this->userRules->logoutRules());
+
+        if ($validation['success'] === false) {
+
+            return $this->formatResponse(false, $validation['data']);
+        }
+
+        $foundUser =  $this->userRepo->findUser($email);
+
+        if ($foundUser === null) {
+            return $this->formatResponse(false, ['message' => 'No user found']);
+        }
+
+        $foundUser = $foundUser->toArray();
+
+        session()->forget('granted_user');
+
+        return $this->formatResponse(true, ['message' => 'Successfully logged out']);
     }
 
 
+    /**
+     * get bloggers list
+     */
     public function getBloggers()
     {
-
-
         $bloggers =  $this->userRepo->getBloggers();
 
         if ($bloggers === null) {

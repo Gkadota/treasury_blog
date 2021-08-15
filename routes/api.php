@@ -36,6 +36,7 @@ Route::prefix('comment')->group(function () {
 Route::prefix('user')->group(function () {
     Route::post('/', 'App\Http\Controllers\api\UsersController@registerUser');
     Route::post('/login', 'App\Http\Controllers\api\UsersController@loginUser');
+    Route::post('/logout', 'App\Http\Controllers\api\UsersController@logoutUser');
     Route::put('/', 'App\Http\Controllers\api\UsersController@updateBlogger');
 });
 
