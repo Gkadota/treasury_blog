@@ -40,7 +40,8 @@ class BlogRules extends BaseRules
     public function blogListRules()
     {
         return [
-            'category'   => ['required', 'string', Rule::in(['all', 'finance', 'technology', 'business'])],
+            'category' => ['sometimes', 'nullable', 'string', Rule::in(['finance', 'technology', 'business'])],
+            'search'   => ['sometimes', 'nullable', 'string'],
         ];
     }
 

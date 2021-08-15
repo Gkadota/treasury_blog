@@ -23,8 +23,8 @@ Route::prefix('blog')->group(function () {
     Route::post('/', 'App\Http\Controllers\api\BlogsController@createBlog');
     Route::put('/', 'App\Http\Controllers\api\BlogsController@updateBlog');
     Route::delete('/', 'App\Http\Controllers\api\BlogsController@deleteBlog');
-    Route::get('/{blog_id}', 'App\Http\Controllers\api\BlogsController@viewBlog');
-    Route::get('/list/{category}', 'App\Http\Controllers\api\BlogsController@viewBlogList');
+    Route::get('/list', 'App\Http\Controllers\api\BlogsController@viewBlogList');
+    Route::get('/{blog_id}', 'App\Http\Controllers\api\BlogsController@viewBlog')->where('blog_id', '[0-9]+');
 });
 
 Route::prefix('comment')->group(function () {

@@ -25,7 +25,7 @@ class BlogRepository extends BaseRepository
     public function updateBlog(array $blogInfo)
     {
         $updatedBlog = Blog::where('blog_id', $blogInfo['blog_id'])
-        ->update($blogInfo);
+            ->update($blogInfo);
 
         return $updatedBlog;
     }
@@ -36,20 +36,23 @@ class BlogRepository extends BaseRepository
      */
     public function findBlog(int $blogId)
     {
-        return Blog::where('blog_id' , $blogId)->with('comments', 'comments.user')->with('blogger')->first();
+        return Blog::where('blog_id', $blogId)->with('comments', 'comments.user')->with('blogger')->first();
     }
 
 
     /**
      * Fetch list of blogs
      */
-    public function getBlogList(string $category)
+    public function getBlogList(string $category = null, string $searchQuery = null)
     {
-        $blogs = Blog::when($category !== 'all', function($query) use ($category) {
+        $blogs = Blog::when($category !== null, function ($query) use ($category) {
             $query->where('category', $category);
-        })
-        ->orderBy('blog_id', 'desc')
-        ->get();
+            })
+            ->when($searchQuery !== null, function ($query) use ($searchQuery) {
+                $query->where('title', 'LIKE', '%' . $searchQuery . '%');
+            })
+            ->orderBy('blog_id', 'desc')
+            ->get();
 
         return $blogs;
     }
@@ -66,7 +69,4 @@ class BlogRepository extends BaseRepository
         $deleteResult = Blog::where(['user_id' => $userId, 'blog_id' => $blogId])->delete();
         return $deleteResult;
     }
-
-
 }
-

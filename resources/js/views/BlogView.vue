@@ -53,7 +53,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            id: this.$routes.params.id,
+            blog: {},
+        }
+    },
+};
 </script>
 
 <style scoped>

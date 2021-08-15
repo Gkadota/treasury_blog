@@ -57,15 +57,18 @@ class BlogService extends BaseService
     }
 
 
-    public function viewBlogList($category)
+    public function viewBlogList($category, $searchQuery)
     {
-        $validation = $this->validateRequest(['category' => $category], $this->blogRules->blogListRules());
+        $validation = $this->validateRequest([
+            'category' => $category,
+            'search' => $searchQuery,
+        ], $this->blogRules->blogListRules());
 
         if ($validation['success'] === false) {
             return $this->formatResponse(false, $validation['data']);
         }
 
-        $blogList =  $this->blogRepo->getBlogList($category);
+        $blogList =  $this->blogRepo->getBlogList($category, $searchQuery);
 
         if ($blogList === null) {
             return $this->formatResponse(false, ['message' => 'No blog found']);

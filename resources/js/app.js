@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './views/App.vue'
 import VueRouter from 'vue-router'
 import router from './routes.js'
+import store from './store/index.js'
+import axios from 'axios'
+import VueAxios from 'vue-axios';
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 
@@ -25,9 +28,11 @@ Vue.use(Buefy,  {
     defaultIconPack: 'fas',
   });
 
+Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 const app = new Vue({
     el: '#app',
     components: { App },
     router:router,
+    store
 });

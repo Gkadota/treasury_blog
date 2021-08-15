@@ -33,10 +33,10 @@ class BlogsController extends Controller
     }
 
 
-    public function viewBlogList(string $category)
+    public function viewBlogList(Request $request)
     {
 
-        return $this->blogService->viewBlogList($category);
+        return $this->blogService->viewBlogList($request->query('category'), $request->query('search'));
     }
 
     public function deleteBlog(Request $request)
