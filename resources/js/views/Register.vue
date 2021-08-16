@@ -143,7 +143,6 @@ export default {
         password: this.password.text,
       });
       this.isLoading = false;
-      console.log(response);
 
       this.validateResponse(response);
     },

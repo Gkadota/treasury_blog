@@ -46,7 +46,7 @@ class UserService extends BaseService
     /**
      *  fetch user using email an password
      */
-    public function findUser($email,  $password)
+    public function login($email,  $password)
     {
         $validation = $this->validateRequest([
             'email'    => $email,
@@ -58,17 +58,17 @@ class UserService extends BaseService
             return $this->formatResponse(false, $validation['data']);
         }
 
-        $foundUser =  $this->userRepo->findUser($email, $password);
+        $loggedInUser =  $this->userRepo->findUser($email, $password);
 
-        if ($foundUser === null) {
+        if ($loggedInUser === null) {
             return $this->formatResponse(false, ['message' => 'Incorrect username/password']);
         }
 
-        $foundUser = $foundUser->toArray();
+        $loggedInUser = $loggedInUser->toArray();
 
-        session()->put('granted_user', $foundUser);
+        session()->put('granted_user', $loggedInUser);
 
-        return $this->formatResponse(true, $foundUser);
+        return $this->formatResponse(true, session()->get('granted_user', $loggedInUser));
     }
 
     /**
@@ -84,6 +84,11 @@ class UserService extends BaseService
         }
 
         $foundUser =  $this->userRepo->findUser($email);
+
+
+        if (!session()->get('granted_user')) {
+            return $this->formatResponse(false, ['message' => 'No session found']);
+        }
 
         if ($foundUser === null) {
             return $this->formatResponse(false, ['message' => 'No user found']);

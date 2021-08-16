@@ -22,7 +22,7 @@ class BaseService {
     }
 
 
-    protected function formatResponse(bool $validate, array $content = [])
+    protected function formatResponse(bool $validate, array $content = null)
     {
        return response()->json(['success' => $validate, 'data' => $content]);
     }

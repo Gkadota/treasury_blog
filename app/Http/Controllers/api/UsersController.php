@@ -31,13 +31,12 @@ class UsersController extends Controller
     public function loginUser(Request $request)
     {
 
-        return $this->userService->findUser($request->input('email'), $request->input('password'));
+        return $this->userService->login($request->input('email'), $request->input('password'));
     }
 
 
     public function logoutUser(Request $request)
     {
-        session()->forget('granter_user');
         return $this->userService->logoutUser($request->input('email'));
 
     }

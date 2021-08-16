@@ -4,7 +4,6 @@
       <div class="column is-one-third">
         <!-- Login form -->
         <section id="login-form">
-           Is Login: {{getLoginStatus}}
           <h1 class="title login-title">Login to Tblog</h1>
           <h2 class="sub-title login-title">
             Don't have an account?
@@ -17,7 +16,7 @@
             :type="emailErrorState"
             :message="email.message[0]"
           >
-            <b-input type="email" v-model="email.text"> </b-input>
+            <b-input type="email" v-model="email.text" required> </b-input>
           </b-field>
 
           <b-field
@@ -25,7 +24,7 @@
             :type="passwordErrorState"
             :message="password.message[0]"
           >
-            <b-input type="password" v-model="password.text" password-reveal>
+            <b-input type="password" v-model="password.text" password-reveal required>
             </b-input>
           </b-field>
 
@@ -79,7 +78,7 @@ export default {
       return this.password.message.length > 0 ? "is-danger" : "";
     },
 
-    ...mapGetters(['getLoginStatus']),
+    ...mapGetters(["getLoginStatus"]),
   },
   methods: {
     async loginUser() {
@@ -92,8 +91,6 @@ export default {
 
       this.validateLoginResponse(loginResponse);
       this.isLoading = false;
-        this.setLoginStatus({isLogin:true});
-      console.log(loginResponse);
     },
 
     validateLoginResponse(response) {
@@ -102,15 +99,19 @@ export default {
         return;
       }
 
+      this.setLoginStatus({ isLogin: true });
+      this.setUserInfo({userInfo: response.data});
+
       Snackbar.open({
         message: "Login successfully",
         actionText: null,
         duration: 2000,
       });
+
       this.$router.push({ name: "blogs" });
     },
 
-    ...mapMutations(['setLoginStatus']),
+    ...mapMutations(["setLoginStatus", 'setUserInfo']),
   },
 };
 </script>

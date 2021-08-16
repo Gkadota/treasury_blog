@@ -3,6 +3,8 @@ import Register from './views/Register.vue'
 import Login from './views/Login.vue'
 import Blogs from './views/Blogs.vue'
 import BlogView from './views/BlogView.vue'
+import CreateBlog from './views/CreateBlog.vue'
+import EditBlog from './views/EditBlog.vue'
 import Home from './views/Home.vue'
 import store from "./store/index";
 const router = new VueRouter({
@@ -17,14 +19,22 @@ const router = new VueRouter({
             path: '/blogs',
             name: 'blogs',
             component: Blogs,
-            meta: { requiredAuth: true },
         },
-
+        {
+            path: '/blog/edit/:id',
+            name: 'edit-blog',
+            component: EditBlog,
+        },
+        {
+            path: '/blog/create',
+            name: 'create-blog',
+            component: CreateBlog,
+        },
         {
             path: '/blog/:id',
             name: 'blog-view',
             component: BlogView,
-            meta: { requiredAuth: true },
+            // meta: { requiredAuth: true },
         },
 
         {

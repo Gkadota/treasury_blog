@@ -4,6 +4,7 @@
 namespace App\Repository;
 
 use App\Models\Blog;
+use App\Models\Comment;
 
 class BlogRepository extends BaseRepository
 {
@@ -36,7 +37,19 @@ class BlogRepository extends BaseRepository
      */
     public function findBlog(int $blogId)
     {
-        return Blog::where('blog_id', $blogId)->with('comments', 'comments.user')->with('blogger')->first();
+        $foundBlog =  Blog::where('blog_id', $blogId)
+        ->with('comments', 'comments.user')
+        ->with('blogger')
+        ->first()->toArray();
+
+        $comments = Comment::where('blog_id', $blogId)
+        ->with('user')
+        ->orderBy('comment_id', 'desc')
+        ->get();
+
+        $foundBlog['comments'] = $comments;
+
+         return $foundBlog;
     }
 
 
@@ -51,6 +64,7 @@ class BlogRepository extends BaseRepository
             ->when($searchQuery !== null, function ($query) use ($searchQuery) {
                 $query->where('title', 'LIKE', '%' . $searchQuery . '%');
             })
+            ->with('blogger')
             ->orderBy('blog_id', 'desc')
             ->get();
 

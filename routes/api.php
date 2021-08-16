@@ -19,13 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::prefix('blog')->group(function () {
-    Route::post('/', 'App\Http\Controllers\api\BlogsController@createBlog');
-    Route::put('/', 'App\Http\Controllers\api\BlogsController@updateBlog');
-    Route::delete('/', 'App\Http\Controllers\api\BlogsController@deleteBlog');
-    Route::get('/list', 'App\Http\Controllers\api\BlogsController@viewBlogList');
-    Route::get('/{blog_id}', 'App\Http\Controllers\api\BlogsController@viewBlog')->where('blog_id', '[0-9]+');
-});
+
 
 Route::prefix('comment')->group(function () {
     Route::post('/', 'App\Http\Controllers\api\CommentsController@createComment');
@@ -43,4 +37,13 @@ Route::prefix('user')->group(function () {
 Route::prefix('admin/bloggers')->group(function () {
     Route::get('/', 'App\Http\Controllers\api\AdminController@getBloggers');
     Route::delete('/', 'App\Http\Controllers\api\AdminController@deleteBloggers');
+});
+
+
+Route::prefix('blog')->group(function () {
+    Route::post('/', 'App\Http\Controllers\api\BlogsController@createBlog');
+    Route::post('/edit', 'App\Http\Controllers\api\BlogsController@updateBlog');
+    Route::delete('/', 'App\Http\Controllers\api\BlogsController@deleteBlog');
+    Route::get('/list', 'App\Http\Controllers\api\BlogsController@viewBlogList');
+    Route::get('/{blog_id}', 'App\Http\Controllers\api\BlogsController@viewBlog')->where('blog_id', '[0-9]+');
 });

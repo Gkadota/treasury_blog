@@ -11,7 +11,7 @@ class BlogRules extends BaseRules
         return [
             'title'    => ['required', 'string',  'max:30'],
             'details'  => ['required', 'string'],
-            'img'      => ['required', 'string'],
+            'img'      => ['required',  'image' , 'mimes:jpg,png,jpeg,gif,svg' , 'max:2048'],
             'category' => ['required', 'string', Rule::in(['finance', 'technology', 'business'])],
             'user_id'  => ['required', 'integer', 'exists:t_users']
         ];
@@ -20,10 +20,11 @@ class BlogRules extends BaseRules
     public function updateBlogRules()
     {
         return [
+            'user_id'  => ['required', 'integer', 'exists:t_users'],
             'blog_id'  => ['required', 'integer', 'exists:t_blogs'],
             'title'    => ['sometimes', 'string',  'max:30'],
             'details'  => ['sometimes', 'string'],
-            'img'      => ['sometimes', 'string'],
+            'img'      => ['sometimes', 'image' , 'mimes:jpg,png,jpeg,gif,svg' , 'max:2048'],
             'category' => ['sometimes', 'string', Rule::in(['finance', 'technology', 'business'])],
         ];
     }

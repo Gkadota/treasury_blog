@@ -24,10 +24,9 @@ class BlogService extends BaseService
     {
         $validation = $this->validateRequest($blogInfo, $this->blogRules->insertBlogRules());
         if ($validation['success'] === false) {
-
             return $this->formatResponse(false, $validation['data']);
         }
-
+        $blogInfo['img'] = $this->uploadBlogImage($blogInfo['img']);
         return   $this->formatResponse(true, $this->blogRepo->insertBlog($blogInfo)->toArray());
     }
 
@@ -40,7 +39,29 @@ class BlogService extends BaseService
             return $this->formatResponse(false, $validation['data']);
         }
 
+        if (isset($blogInfo['img'])) {
+
+            $blogInfo['img'] = $this->uploadBlogImage($blogInfo['img']);
+        }
+
+
         return   $this->formatResponse((bool) $this->blogRepo->updateBlog($blogInfo));
+    }
+
+    /**
+     * Upload blog image and return its path
+     */
+    private function uploadBlogImage($blogImg) {
+        $imgPath = $blogImg->getClientOriginalName();
+
+        $imgName = pathinfo($imgPath, PATHINFO_FILENAME);
+        $imgExt = $blogImg->getClientOriginalExtension();
+        $imgName = $imgName . '_' . time() . '.' . $imgExt; // image format
+
+        $blogImg->storeAs('public/blog_img', $imgName); // store image
+        $blogImgpath = 'blog_img/' . $imgName;
+
+        return $blogImgpath;
     }
 
 
@@ -53,7 +74,7 @@ class BlogService extends BaseService
         }
 
         $foundBlog =  $this->blogRepo->findBlog($blogId);
-        return $this->formatResponse(true, $foundBlog->toArray());
+        return $this->formatResponse(true, $foundBlog);
     }
 
 
