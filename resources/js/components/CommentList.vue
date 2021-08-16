@@ -8,7 +8,7 @@
       <div class="message-header">
         {{ comment.user.first_name }} {{ comment.user.last_name }}
 
-        <div class="buttons" v-if="isMyComment">
+        <div class="buttons" v-if="isMyComment(comment.user.user_id)">
           <b-button
             type="is-light"
             @click="selectToEdit(comment.comment_id, comment.comments)"

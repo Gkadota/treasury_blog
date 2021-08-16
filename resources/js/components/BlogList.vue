@@ -30,6 +30,7 @@
           <p class="card-footer-item">
             <span>
               <router-link
+
                 class="button is-warning"
                 :to="'/blog/' + blog.blog_id"
                 >View post</router-link
@@ -48,6 +49,8 @@ export default {
   props: {
     blogList: Object | Array,
   },
+
+
 };
 </script>
 

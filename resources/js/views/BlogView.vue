@@ -90,11 +90,19 @@ export default {
     commentErrorState() {
       return this.newComment.message.length > 0 ? "is-danger" : "";
     },
-    ...mapGetters(["getUserInfo"]),
+    ...mapGetters(["getUserInfo", "getLoginStatus"]),
   },
 
   methods: {
     async createComment() {
+      if (this.getLoginStatus === false) {
+        Snackbar.open({
+          message: "You must log in first",
+          actionText: 'ok',
+          duration: 2000,
+        });
+        return false;
+      }
       this.isCommentLoading = true;
       let response = await api.createComment(
         this.getUserInfo.user_id,

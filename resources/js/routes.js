@@ -24,17 +24,18 @@ const router = new VueRouter({
             path: '/blog/edit/:id',
             name: 'edit-blog',
             component: EditBlog,
+            meta: { requiredAuth: true },
         },
         {
             path: '/blog/create',
             name: 'create-blog',
             component: CreateBlog,
+            meta: { requiredAuth: true },
         },
         {
             path: '/blog/:id',
             name: 'blog-view',
             component: BlogView,
-            // meta: { requiredAuth: true },
         },
 
         {

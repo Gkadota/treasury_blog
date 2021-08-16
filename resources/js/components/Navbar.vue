@@ -8,12 +8,14 @@
 
     <template #end>
       <b-navbar-item tag="div">
+          <p class="sub-title  mr-2" v-if="getLoginStatus=== true"> Hi,<b> {{getUserInfo.first_name}}</b> </p>
         <div class="buttons">
+
           <router-link
             class="button is-primary"
             :to="{ name: 'create-blog' }"
             v-if="getLoginStatus"
-            >Create New Blogs</router-link
+            >Create New Blog</router-link
           >
           <router-link class="button is-primary" :to="{ name: 'blogs' }"
             >Blogs</router-link

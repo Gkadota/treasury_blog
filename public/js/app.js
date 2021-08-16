@@ -11952,6 +11952,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "BlogsList",
   props: {
@@ -12284,6 +12285,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -12502,7 +12505,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     commentErrorState: function commentErrorState() {
       return this.newComment.message.length > 0 ? "is-danger" : "";
     }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)(["getUserInfo"])),
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)(["getUserInfo", "getLoginStatus"])),
   methods: {
     createComment: function createComment() {
       var _this = this;
@@ -12514,23 +12517,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.isCommentLoading = true;
-                _context.next = 3;
-                return _api__WEBPACK_IMPORTED_MODULE_1__.default.createComment(_this.getUserInfo.user_id, _this.blogId, _this.newComment.text);
+                if (!(_this.getLoginStatus === false)) {
+                  _context.next = 3;
+                  break;
+                }
+
+                buefy__WEBPACK_IMPORTED_MODULE_4__.SnackbarProgrammatic.open({
+                  message: "You must log in first",
+                  actionText: 'ok',
+                  duration: 2000
+                });
+                return _context.abrupt("return", false);
 
               case 3:
+                _this.isCommentLoading = true;
+                _context.next = 6;
+                return _api__WEBPACK_IMPORTED_MODULE_1__.default.createComment(_this.getUserInfo.user_id, _this.blogId, _this.newComment.text);
+
+              case 6:
                 response = _context.sent;
                 _this.isCommentLoading = false;
 
                 if (response.success) {
-                  _context.next = 8;
+                  _context.next = 11;
                   break;
                 }
 
                 _this.newComment.message = (_response$data$commen = response.data.comments) !== null && _response$data$commen !== void 0 ? _response$data$commen : [];
                 return _context.abrupt("return");
 
-              case 8:
+              case 11:
                 buefy__WEBPACK_IMPORTED_MODULE_4__.SnackbarProgrammatic.open({
                   message: "Comment posted",
                   actionText: null,
@@ -12540,7 +12556,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 _this.getBlogDetails();
 
-              case 11:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -14261,16 +14277,21 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_8__.default({
   }, {
     path: '/blog/edit/:id',
     name: 'edit-blog',
-    component: _views_EditBlog_vue__WEBPACK_IMPORTED_MODULE_5__.default
+    component: _views_EditBlog_vue__WEBPACK_IMPORTED_MODULE_5__.default,
+    meta: {
+      requiredAuth: true
+    }
   }, {
     path: '/blog/create',
     name: 'create-blog',
-    component: _views_CreateBlog_vue__WEBPACK_IMPORTED_MODULE_4__.default
+    component: _views_CreateBlog_vue__WEBPACK_IMPORTED_MODULE_4__.default,
+    meta: {
+      requiredAuth: true
+    }
   }, {
     path: '/blog/:id',
     name: 'blog-view',
-    component: _views_BlogView_vue__WEBPACK_IMPORTED_MODULE_3__.default // meta: { requiredAuth: true },
-
+    component: _views_BlogView_vue__WEBPACK_IMPORTED_MODULE_3__.default
   }, {
     path: '/register',
     name: 'register',
@@ -56587,7 +56608,7 @@ var render = function() {
                 _vm._s(comment.user.last_name) +
                 "\n\n      "
             ),
-            _vm.isMyComment
+            _vm.isMyComment(comment.user.user_id)
               ? _c(
                   "div",
                   { staticClass: "buttons" },
@@ -56792,6 +56813,13 @@ var render = function() {
         fn: function() {
           return [
             _c("b-navbar-item", { attrs: { tag: "div" } }, [
+              _vm.getLoginStatus === true
+                ? _c("p", { staticClass: "sub-title  mr-2" }, [
+                    _vm._v(" Hi,"),
+                    _c("b", [_vm._v(" " + _vm._s(_vm.getUserInfo.first_name))])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "buttons" },
@@ -56803,7 +56831,7 @@ var render = function() {
                           staticClass: "button is-primary",
                           attrs: { to: { name: "create-blog" } }
                         },
-                        [_vm._v("Create New Blogs")]
+                        [_vm._v("Create New Blog")]
                       )
                     : _vm._e(),
                   _vm._v(" "),
