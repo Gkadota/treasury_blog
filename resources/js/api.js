@@ -165,6 +165,23 @@ class api {
 
 
 
+     async getBloggers() {
+        let { data } = await Vue.axios.get(
+            `${this.baseUrl}/admin/bloggers`,
+        );
+        return data;
+    }
+
+    async deleteBlogger(userId) {
+        let { data } = await Vue.axios.delete(
+            `${this.baseUrl}/admin/bloggers`,
+            { params: { user_id: userId } }
+        );
+        return data;
+    }
+
+
+
 }
 
 

@@ -5,7 +5,9 @@ import Blogs from './views/Blogs.vue'
 import BlogView from './views/BlogView.vue'
 import CreateBlog from './views/CreateBlog.vue'
 import EditBlog from './views/EditBlog.vue'
+import Admin from './views/Admin.vue'
 import Home from './views/Home.vue'
+import EditAdmin from './views/EditAdmin.vue'
 import store from "./store/index";
 const router = new VueRouter({
     mode: 'history',
@@ -48,6 +50,21 @@ const router = new VueRouter({
             name: 'login',
             component: Login,
         },
+
+        {
+            path: '/admin',
+            name: 'admin',
+            component: Admin,
+            meta: { requiredAdmin: true },
+        },
+
+        {
+            path: '/admin/edit/:id',
+            name: 'edit-admin',
+            component: EditAdmin,
+            meta: { requiredAdmin: true },
+        },
+
     ],
 });
 
@@ -55,7 +72,13 @@ const router = new VueRouter({
  * Before guard router
  */
 router.beforeEach((to, from, next) => {
-
+    if (to.meta.requiredAdmin === true) {
+        if (store.getters.getUserInfo.user_type !== 'admin') {
+            next({ name: 'blogs' });
+        } else {
+            next();
+        }
+    }
     if (to.meta.requiredAuth === true) {
         if (store.getters.getLoginStatus === false) {
             next({ name: 'home' });

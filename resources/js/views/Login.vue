@@ -28,10 +28,6 @@
             </b-input>
           </b-field>
 
-          <!-- <b-field position="is-centered">
-                    <b-input v-show="false"></b-input>
-                    <a href="" class="is-dark"> Forgot your password?</a>
-                </b-field> -->
 
           <b-field position="is-centered">
             <b-input v-show="false"></b-input>
@@ -78,7 +74,7 @@ export default {
       return this.password.message.length > 0 ? "is-danger" : "";
     },
 
-    ...mapGetters(["getLoginStatus"]),
+    ...mapGetters(["getLoginStatus", 'getUserInfo']),
   },
   methods: {
     async loginUser() {
@@ -108,7 +104,8 @@ export default {
         duration: 2000,
       });
 
-      this.$router.push({ name: "blogs" });
+      let routeDirection = this.getUserInfo.user_type === 'admin' ? 'admin' : 'blogs' ;
+      this.$router.push({ name: routeDirection });
     },
 
     ...mapMutations(["setLoginStatus", 'setUserInfo']),
