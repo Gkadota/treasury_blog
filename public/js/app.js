@@ -11972,6 +11972,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api */ "./resources/js/api.js");
+/* harmony import */ var buefy__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! buefy */ "./node_modules/buefy/dist/esm/snackbar.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -11990,10 +12007,179 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {};
+    return {
+      commentIdOnEdit: null,
+      commentToEdit: null
+    };
   },
+  methods: {
+    selectToEdit: function selectToEdit(commentId) {
+      var comment = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      this.commentIdOnEdit = commentId;
+      this.commentToEdit = comment;
+    },
+    isOnEditMode: function isOnEditMode(commentId) {
+      return this.commentIdOnEdit === commentId;
+    },
+    isMyComment: function isMyComment(userId) {
+      return this.getUserInfo.user_id === userId;
+    },
+    updateComment: function updateComment(commentId) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response, foundIndex, commentToUpdate;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _api__WEBPACK_IMPORTED_MODULE_1__.default.updateComment(commentId, _this.commentToEdit);
+
+              case 2:
+                response = _context.sent;
+
+                if (response.success) {
+                  _context.next = 6;
+                  break;
+                }
+
+                buefy__WEBPACK_IMPORTED_MODULE_2__.SnackbarProgrammatic.open({
+                  message: "Something went wrong. Please try again",
+                  actionText: null,
+                  duration: 2000
+                });
+                return _context.abrupt("return", false);
+
+              case 6:
+                buefy__WEBPACK_IMPORTED_MODULE_2__.SnackbarProgrammatic.open({
+                  message: "Comment updated",
+                  actionText: null,
+                  duration: 2000
+                });
+                foundIndex = _this.comments.findIndex(function (comment) {
+                  return comment.comment_id === commentId;
+                });
+                commentToUpdate = _this.comments[foundIndex];
+                commentToUpdate.comments = _this.commentToEdit;
+                _this.comments[foundIndex] = commentToUpdate;
+                _this.commentIdOnEdit = null;
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    deleteComment: function deleteComment(commentId, blogId) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response, index;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (confirm("Do you really want to delete this?")) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return");
+
+              case 2:
+                _context2.next = 4;
+                return _api__WEBPACK_IMPORTED_MODULE_1__.default.deleteComment(commentId);
+
+              case 4:
+                response = _context2.sent;
+
+                if (response.success) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                buefy__WEBPACK_IMPORTED_MODULE_2__.SnackbarProgrammatic.open({
+                  message: "Something went wrong. Please try again",
+                  actionText: null,
+                  duration: 2000
+                });
+                return _context2.abrupt("return", false);
+
+              case 8:
+                buefy__WEBPACK_IMPORTED_MODULE_2__.SnackbarProgrammatic.open({
+                  message: "Comment deleted",
+                  actionText: null,
+                  duration: 2000
+                });
+                index = _this2.comments.map(function (item) {
+                  return item.comment_id;
+                }).indexOf(commentId);
+
+                _this2.comments.splice(index, 1);
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)(["getUserInfo"])),
   props: {
     comments: Object | Array
   }
@@ -12284,7 +12470,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -12386,7 +12571,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 5:
                 response = _context2.sent;
-                _this2.isLoading = true;
+                _this2.isLoading = false;
 
                 if (_this2.validateBlogResponse(response)) {
                   _context2.next = 9;
@@ -13788,7 +13973,7 @@ var api = /*#__PURE__*/function () {
             switch (_context7.prev = _context7.next) {
               case 0:
                 _context7.next = 2;
-                return vue__WEBPACK_IMPORTED_MODULE_1__.default.axios.post("".concat(this.baseUrl, "/user/login"), loginInfo);
+                return vue__WEBPACK_IMPORTED_MODULE_1__.default.axios.post("/login", loginInfo);
 
               case 2:
                 _yield$Vue$axios$post4 = _context7.sent;
@@ -13800,7 +13985,7 @@ var api = /*#__PURE__*/function () {
                 return _context7.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee7);
       }));
 
       function login(_x7) {
@@ -13824,7 +14009,7 @@ var api = /*#__PURE__*/function () {
             switch (_context8.prev = _context8.next) {
               case 0:
                 _context8.next = 2;
-                return vue__WEBPACK_IMPORTED_MODULE_1__.default.axios.post("".concat(this.baseUrl, "/user/logout"), logoutInfo);
+                return vue__WEBPACK_IMPORTED_MODULE_1__.default.axios.post("/logout", logoutInfo);
 
               case 2:
                 _yield$Vue$axios$post5 = _context8.sent;
@@ -13836,7 +14021,7 @@ var api = /*#__PURE__*/function () {
                 return _context8.stop();
             }
           }
-        }, _callee8, this);
+        }, _callee8);
       }));
 
       function logout(_x8) {
@@ -13884,6 +14069,87 @@ var api = /*#__PURE__*/function () {
       }
 
       return createComment;
+    }()
+    /**
+     * Delete comment
+     * @param {*} commentId
+     * @returns
+     */
+
+  }, {
+    key: "deleteComment",
+    value: function () {
+      var _deleteComment = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10(commentId) {
+        var _yield$Vue$axios$dele2, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.next = 2;
+                return vue__WEBPACK_IMPORTED_MODULE_1__.default.axios.delete("".concat(this.baseUrl, "/comment"), {
+                  params: {
+                    comment_id: commentId
+                  }
+                });
+
+              case 2:
+                _yield$Vue$axios$dele2 = _context10.sent;
+                data = _yield$Vue$axios$dele2.data;
+                return _context10.abrupt("return", data);
+
+              case 5:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function deleteComment(_x12) {
+        return _deleteComment.apply(this, arguments);
+      }
+
+      return deleteComment;
+    }()
+    /**
+     * Update comment
+     */
+
+  }, {
+    key: "updateComment",
+    value: function () {
+      var _updateComment = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11(commentId, comments) {
+        var _yield$Vue$axios$post7, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                _context11.next = 2;
+                return vue__WEBPACK_IMPORTED_MODULE_1__.default.axios.post("".concat(this.baseUrl, "/comment/edit"), {
+                  comment_id: commentId,
+                  comments: comments
+                });
+
+              case 2:
+                _yield$Vue$axios$post7 = _context11.sent;
+                data = _yield$Vue$axios$post7.data;
+                return _context11.abrupt("return", data);
+
+              case 5:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this);
+      }));
+
+      function updateComment(_x13, _x14) {
+        return _updateComment.apply(this, arguments);
+      }
+
+      return updateComment;
     }()
   }]);
 
@@ -56319,8 +56585,49 @@ var render = function() {
                 _vm._s(comment.user.first_name) +
                 " " +
                 _vm._s(comment.user.last_name) +
-                "\n      "
+                "\n\n      "
             ),
+            _vm.isMyComment
+              ? _c(
+                  "div",
+                  { staticClass: "buttons" },
+                  [
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { type: "is-light" },
+                        on: {
+                          click: function($event) {
+                            return _vm.selectToEdit(
+                              comment.comment_id,
+                              comment.comments
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v("\n          Edit\n        ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { type: "is-danger is-outlined" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteComment(
+                              comment.comment_id,
+                              comment.blog_id
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v("\n          Delete\n        ")]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
             _c("p", { staticClass: "is-size-7 has-text-right" }, [
               _c("i", [
                 _vm._v(
@@ -56331,7 +56638,75 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "message-body" }, [
-            _vm._v("\n      " + _vm._s(comment.comments) + "\n    ")
+            _c("p", [_vm._v(_vm._s(comment.comments))]),
+            _vm._v(" "),
+            _vm.isOnEditMode(comment.comment_id)
+              ? _c(
+                  "div",
+                  { staticClass: "container" },
+                  [
+                    _c(
+                      "b-field",
+                      {
+                        attrs: {
+                          position: "is-left",
+                          horizontal: "",
+                          label: "Edit Comment: "
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.updateComment(_vm.commentId)
+                          }
+                        }
+                      },
+                      [
+                        _c("b-input", {
+                          attrs: { type: "textarea", required: "" },
+                          model: {
+                            value: _vm.commentToEdit,
+                            callback: function($$v) {
+                              _vm.commentToEdit = $$v
+                            },
+                            expression: "commentToEdit"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("b-field", { attrs: { horizontal: "" } }, [
+                      _c(
+                        "p",
+                        { staticClass: "control" },
+                        [
+                          _c("b-button", {
+                            attrs: {
+                              label: "Update Comment",
+                              type: "is-warning "
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateComment(comment.comment_id)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("b-button", {
+                            attrs: { label: "Cancel", type: "is-light " },
+                            on: {
+                              click: function($event) {
+                                return _vm.selectToEdit(null)
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ],
+                  1
+                )
+              : _vm._e()
           ])
         ]
       )

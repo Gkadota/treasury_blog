@@ -28,18 +28,7 @@ class UsersController extends Controller
         return $this->userService->updateUser($request->all());
     }
 
-    public function loginUser(Request $request)
-    {
 
-        return $this->userService->login($request->input('email'), $request->input('password'));
-    }
-
-
-    public function logoutUser(Request $request)
-    {
-        return $this->userService->logoutUser($request->input('email'));
-
-    }
 
 
 }

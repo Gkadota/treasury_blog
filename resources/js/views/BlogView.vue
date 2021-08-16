@@ -32,7 +32,6 @@
     <!-- COMMENT SECTION -->
     <hr />
     <div class="container box mt-3">
-
       <b-field
         position="is-left"
         horizontal
@@ -105,7 +104,7 @@ export default {
 
       this.isCommentLoading = false;
 
-    if (!response.success) {
+      if (!response.success) {
         this.newComment.message = response.data.comments ?? [];
         return;
       }
@@ -115,7 +114,7 @@ export default {
         actionText: null,
         duration: 2000,
       });
-this.newComment.message= [];
+      this.newComment.message = [];
       this.getBlogDetails();
     },
 
@@ -128,7 +127,7 @@ this.newComment.message= [];
         this.getUserInfo.user_id
       );
 
-      this.isLoading = true;
+      this.isLoading = false;
 
       if (!this.validateBlogResponse(response)) return;
 

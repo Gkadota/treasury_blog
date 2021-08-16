@@ -29,11 +29,11 @@ class api {
     }
 
 
-   /**
-    *  View Blog
-    * @param {*} blogId
-    * @returns
-    */
+    /**
+     *  View Blog
+     * @param {*} blogId
+     * @returns
+     */
     async getBlog(blogId) {
         let { data } = await Vue.axios.get(
             `${this.baseUrl}/blog/${blogId}`,
@@ -43,12 +43,12 @@ class api {
 
 
 
-      /**
-       * Create new blog
-       * @param {*} blogInfo
-       * @returns
-       */
-       async createBlog(blogInfo) {
+    /**
+     * Create new blog
+     * @param {*} blogInfo
+     * @returns
+     */
+    async createBlog(blogInfo) {
         let { data } = await Vue.axios.post(
             `${this.baseUrl}/blog`,
             blogInfo,
@@ -67,7 +67,7 @@ class api {
        * @param {*} blogInfo
        * @returns
        */
-     async updateBlog(blogInfo) {
+    async updateBlog(blogInfo) {
         let { data } = await Vue.axios.post(
             `${this.baseUrl}/blog/edit`,
             blogInfo,
@@ -90,7 +90,7 @@ class api {
     async deleteBlog(blogId, userId) {
         let { data } = await Vue.axios.delete(
             `${this.baseUrl}/blog`,
-           {params: { blog_id: blogId, user_id: userId }}
+            { params: { blog_id: blogId, user_id: userId } }
         );
         return data;
     }
@@ -101,7 +101,7 @@ class api {
      */
     async login(loginInfo) {
         let { data } = await Vue.axios.post(
-            `${this.baseUrl}/user/login`,
+            `/login`,
             loginInfo,
         );
         return data;
@@ -112,7 +112,7 @@ class api {
     */
     async logout(logoutInfo) {
         let { data } = await Vue.axios.post(
-            `${this.baseUrl}/user/logout`,
+            `/logout`,
             logoutInfo,
         );
         return data;
@@ -122,13 +122,42 @@ class api {
     /**
      * Create comment
      */
-     async createComment(userId, blogId, comments) {
+    async createComment(userId, blogId, comments) {
         let { data } = await Vue.axios.post(
             `${this.baseUrl}/comment`,
             {
                 user_id: userId,
                 blog_id: blogId,
-                comments:comments,
+                comments: comments,
+            },
+        );
+        return data;
+    }
+
+
+    /**
+     * Delete comment
+     * @param {*} commentId
+     * @returns
+     */
+    async deleteComment(commentId) {
+        let { data } = await Vue.axios.delete(
+            `${this.baseUrl}/comment`,
+            { params: { comment_id: commentId } }
+        );
+        return data;
+    }
+
+
+    /**
+     * Update comment
+     */
+    async updateComment(commentId, comments) {
+        let { data } = await Vue.axios.post(
+            `${this.baseUrl}/comment/edit`,
+            {
+                comment_id: commentId,
+                comments: comments
             },
         );
         return data;

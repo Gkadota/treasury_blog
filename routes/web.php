@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
+Route::post('/login', 'App\Http\Controllers\AdminController@loginUser');
+Route::post('/logout', 'App\Http\Controllers\AdminController@logoutUser');
 Route::get('/{any}', 'App\Http\Controllers\AdminController@showIndexPage')->where('any', '.*');
 

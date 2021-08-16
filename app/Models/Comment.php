@@ -32,14 +32,7 @@ class Comment extends Model
         'blog_id',
     ];
 
-/**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'blog_id',
-    ];
+
 
 
      /**

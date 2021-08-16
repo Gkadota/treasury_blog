@@ -14,23 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 
 
 
 Route::prefix('comment')->group(function () {
     Route::post('/', 'App\Http\Controllers\api\CommentsController@createComment');
-    Route::put('/', 'App\Http\Controllers\api\CommentsController@updateComment');
+    Route::post('/edit', 'App\Http\Controllers\api\CommentsController@updateComment');
     Route::delete('/', 'App\Http\Controllers\api\CommentsController@deleteComment');
 });
 
 Route::prefix('user')->group(function () {
     Route::post('/', 'App\Http\Controllers\api\UsersController@registerUser');
-    Route::post('/login', 'App\Http\Controllers\api\UsersController@loginUser');
-    Route::post('/logout', 'App\Http\Controllers\api\UsersController@logoutUser');
+
     Route::put('/', 'App\Http\Controllers\api\UsersController@updateBlogger');
 });
 
