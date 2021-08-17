@@ -1,5 +1,6 @@
 <template>
   <div class="columns is-multiline">
+
     <div class="column is-4" v-for="blog in blogList" :key="blog.blog_id">
       <div class="card blog-card">
         <div class="card-image">
@@ -15,15 +16,7 @@
             </div>
           </div>
 
-          <!-- <div class="content">
-            <br />
 
-            <time datetime="2016-1-1">
-              {{
-                blog.created_at.substr(0, blog.created_at.indexOf(" "))
-              }}</time
-            >
-          </div> -->
         </div>
 
         <footer class="card-footer">

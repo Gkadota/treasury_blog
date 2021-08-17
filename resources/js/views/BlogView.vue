@@ -112,7 +112,7 @@ export default {
 
       this.isCommentLoading = false;
 
-      if (!response.success) {
+      if (!response.success && response.data !== null) {
         this.newComment.message = response.data.comments ?? [];
         return;
       }

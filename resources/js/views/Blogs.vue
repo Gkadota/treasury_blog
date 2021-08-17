@@ -47,6 +47,7 @@
     </div>
 
     <div class="container">
+         <b-loading  v-model="isLoading" ></b-loading>
       <BlogList :blog-list="blogList" />
     </div>
   </div>
@@ -70,6 +71,7 @@ export default {
       searchQuery: "",
       selectedTab: "all",
       blogList: {},
+      isLoading:false,
     };
   },
 
@@ -96,9 +98,10 @@ export default {
       await this.displayBlogList();
     },
     async displayBlogList() {
+        this.isLoading = true;
       let category = this.selectedTab !== "all" ? this.selectedTab : "";
       let response = await api.getBlogList(category, this.searchQuery);
-
+    this.isLoading = false;
       if (!response.success) {
         Snackbar.open({
           message: "Something went wrong",

@@ -1,11 +1,11 @@
 <template>
   <section class="mt-5">
+      <b-loading  v-model="isLoading" ></b-loading>
     <div class="buttons">
       <b-button
         label="Delete Selected"
         type="is-danger"
         :disabled="!selected"
-        :loading="isLoading"
         @click="deleteBlogger"
       />
 
@@ -100,8 +100,10 @@ export default {
     },
 
     async getBloggers() {
+        this.isLoading = true;
       let response = await api.getBloggers();
 
+        this.isLoading = false;
       if (!response.success) {
         Snackbar.open({
           message: "Something went wrong",

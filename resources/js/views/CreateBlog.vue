@@ -102,7 +102,7 @@ export default {
     },
 
     validateResponse(response) {
-      if (!response.success) {
+      if (!response.success && response.data !== null) {
         this.title.message = response.data.title ?? [];
         this.details.message = response.data.details ?? [];
         this.category.message = response.data.category ?? [];

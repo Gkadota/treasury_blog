@@ -11946,13 +11946,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "BlogsList",
   props: {
@@ -12519,14 +12512,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                _this2.isLoading = true;
+                _context2.next = 3;
                 return _api__WEBPACK_IMPORTED_MODULE_1__.default.getBloggers();
 
-              case 2:
+              case 3:
                 response = _context2.sent;
+                _this2.isLoading = false;
 
                 if (response.success) {
-                  _context2.next = 6;
+                  _context2.next = 8;
                   break;
                 }
 
@@ -12537,7 +12532,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 return _context2.abrupt("return");
 
-              case 6:
+              case 8:
                 bloggers = response.data;
                 updatedBlogger = bloggers.map(function (_ref) {
                   var user_id = _ref.user_id,
@@ -12555,7 +12550,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 _this2.bloggers = response.data;
 
-              case 9:
+              case 11:
               case "end":
                 return _context2.stop();
             }
@@ -12751,7 +12746,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 response = _context.sent;
                 _this.isCommentLoading = false;
 
-                if (response.success) {
+                if (!(!response.success && response.data !== null)) {
                   _context.next = 11;
                   break;
                 }
@@ -12955,6 +12950,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -12970,7 +12966,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       searchQuery: "",
       selectedTab: "all",
-      blogList: {}
+      blogList: {},
+      isLoading: false
     };
   },
   computed: {
@@ -13017,15 +13014,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _this2.isLoading = true;
                 category = _this2.selectedTab !== "all" ? _this2.selectedTab : "";
-                _context2.next = 3;
+                _context2.next = 4;
                 return _api__WEBPACK_IMPORTED_MODULE_2__.default.getBlogList(category, _this2.searchQuery);
 
-              case 3:
+              case 4:
                 response = _context2.sent;
+                _this2.isLoading = false;
 
                 if (response.success) {
-                  _context2.next = 7;
+                  _context2.next = 9;
                   break;
                 }
 
@@ -13036,11 +13035,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 return _context2.abrupt("return");
 
-              case 7:
+              case 9:
                 console.log(response);
                 _this2.blogList = response.data;
 
-              case 9:
+              case 11:
               case "end":
                 return _context2.stop();
             }
@@ -13210,7 +13209,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     validateResponse: function validateResponse(response) {
-      if (!response.success) {
+      if (!response.success && response.data !== null) {
         var _response$data$title, _response$data$detail, _response$data$catego, _response$data$img;
 
         this.title.message = (_response$data$title = response.data.title) !== null && _response$data$title !== void 0 ? _response$data$title : [];
@@ -74921,6 +74920,16 @@ var render = function() {
     "section",
     { staticClass: "mt-5" },
     [
+      _c("b-loading", {
+        model: {
+          value: _vm.isLoading,
+          callback: function($$v) {
+            _vm.isLoading = $$v
+          },
+          expression: "isLoading"
+        }
+      }),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "buttons" },
@@ -74929,8 +74938,7 @@ var render = function() {
             attrs: {
               label: "Delete Selected",
               type: "is-danger",
-              disabled: !_vm.selected,
-              loading: _vm.isLoading
+              disabled: !_vm.selected
             },
             on: { click: _vm.deleteBlogger }
           }),
@@ -75282,7 +75290,19 @@ var render = function() {
     _c(
       "div",
       { staticClass: "container" },
-      [_c("BlogList", { attrs: { "blog-list": _vm.blogList } })],
+      [
+        _c("b-loading", {
+          model: {
+            value: _vm.isLoading,
+            callback: function($$v) {
+              _vm.isLoading = $$v
+            },
+            expression: "isLoading"
+          }
+        }),
+        _vm._v(" "),
+        _c("BlogList", { attrs: { "blog-list": _vm.blogList } })
+      ],
       1
     )
   ])
