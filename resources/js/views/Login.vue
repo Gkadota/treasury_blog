@@ -90,7 +90,7 @@ export default {
     },
 
     validateLoginResponse(response) {
-      if (!response.success) {
+      if (!response.success && response.data !== null) {
         this.email.message = ["Incorrect email/password."];
         return;
       }

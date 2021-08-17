@@ -7,7 +7,7 @@ import CreateBlog from './views/CreateBlog.vue'
 import EditBlog from './views/EditBlog.vue'
 import Admin from './views/Admin.vue'
 import Home from './views/Home.vue'
-import EditAdmin from './views/EditAdmin.vue'
+import EditUser from './views/EditUser.vue'
 import store from "./store/index";
 const router = new VueRouter({
     mode: 'history',
@@ -61,7 +61,7 @@ const router = new VueRouter({
         {
             path: '/admin/edit/:id',
             name: 'edit-admin',
-            component: EditAdmin,
+            component: EditUser,
             meta: { requiredAdmin: true },
         },
 

@@ -149,7 +149,7 @@ export default {
 
     validateResponse(response) {
 
-      if (!response.success) {
+      if (!response.success && response.data !== null) {
         this.firstName.message = response.data.first_name ?? [];
         this.lastName.message = response.data.last_name ?? [];
         this.email.message = response.data.email ?? [];

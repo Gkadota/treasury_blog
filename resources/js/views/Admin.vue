@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <b-field>
+  <section class="mt-5">
+    <div class="buttons">
       <b-button
         label="Delete Selected"
         type="is-danger"
@@ -8,10 +8,12 @@
         :loading="isLoading"
         @click="deleteBlogger"
       />
-    </b-field>
+
+      <b-button label="Edit Selected" type="is-info" @click="initEditPage" />
+    </div>
 
     <b-tabs>
-      <b-tab-item label="Table">
+      <b-tab-item label="Users">
         <b-table
           :data="bloggers"
           :columns="columns"
@@ -65,7 +67,15 @@ export default {
   },
 
   methods: {
+    initEditPage() {
+      this.$router.push({
+        name: "edit-admin",
+        params: { id: this.selected.user_id , user: this.selected},
+      });
+    },
     async deleteBlogger() {
+      if (!confirm("are you sure?")) return;
+
       this.isLoading = true;
       let response = await api.deleteBlogger(this.selected.user_id);
 

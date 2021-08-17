@@ -181,6 +181,15 @@ class api {
     }
 
 
+    async editBlogger(userInfo) {
+        let { data } = await Vue.axios.put(
+            `${this.baseUrl}/user`,
+            userInfo
+        );
+        return data;
+    }
+
+
 
 }
 

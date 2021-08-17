@@ -21,7 +21,7 @@ class UserRules extends BaseRules
     public function updateUserRules(string $userId)
     {
         return [
-            'user_id'     => ['required', 'string',  'max:30', 'exists:t_users'],
+            'user_id'     => ['required',   'max:30', 'exists:t_users'],
             'first_name'  => ['sometimes', 'string',  'max:30'],
             'last_name'   => ['sometimes', 'string',  'max:30'],
             'email'       => ['sometimes', 'email', 'string', Rule::unique('t_users')->ignore($userId, 'user_id')],

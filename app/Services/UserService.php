@@ -33,7 +33,7 @@ class UserService extends BaseService
 
     public function updateUser($userInfo)
     {
-        $validation = $this->validateRequest($userInfo, $this->userRules->updateUserRules($userInfo['user_id']));
+        $validation = $this->validateRequest($userInfo, $this->userRules->updateUserRules(data_get($userInfo, 'user_id','')));
         if ($validation['success'] === false) {
             return $this->formatResponse(false, $validation['data']);
         }

@@ -8,16 +8,26 @@
 
     <template #end>
       <b-navbar-item tag="div">
-          <p class="sub-title  mr-2" v-if="getLoginStatus=== true"> Hi,<b> {{getUserInfo.first_name}}</b> </p>
+        <p class="sub-title mr-2" v-if="getLoginStatus === true">
+          Hi,<b> {{ getUserInfo.first_name }}</b>
+        </p>
         <div class="buttons">
-
+          <router-link
+            class="button is-primary"
+            :to="{ name: 'admin' }"
+            v-if="getLoginStatus && getUserInfo.user_type === 'admin'"
+            >Users</router-link
+          >
           <router-link
             class="button is-primary"
             :to="{ name: 'create-blog' }"
-            v-if="getLoginStatus"
+            v-if="getLoginStatus && getUserInfo.user_type === 'blogger'"
             >Create New Blog</router-link
           >
-          <router-link class="button is-primary" :to="{ name: 'blogs' }"
+          <router-link
+            class="button is-primary"
+            :to="{ name: 'blogs' }"
+            v-if="getLoginStatus && getUserInfo.user_type === 'blogger'"
             >Blogs</router-link
           >
           <router-link
@@ -60,7 +70,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getLoginStatus', 'getUserInfo']),
+    ...mapGetters(["getLoginStatus", "getUserInfo"]),
   },
 
   methods: {
@@ -78,19 +88,17 @@ export default {
         this.setUserInfo({ userInfo: {} });
         this.$router.push({ name: "home" });
       } else {
-
         Snackbar.open({
           message: "Something went wrong. Please try again",
           actionText: null,
           duration: 2000,
         });
-
       }
 
       this.isLoading = false;
     },
 
-    ...mapMutations(["setLoginStatus", 'setUserInfo']),
+    ...mapMutations(["setLoginStatus", "setUserInfo"]),
   },
 };
 </script>
